@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from 'react'
-import { auth, firebase } from '../services/firebase'
+import { auth, firebase, getAuth, signOut } from '../services/firebase'
 
 type User = {
   id: string;
@@ -9,6 +9,7 @@ type User = {
 type AuthContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
+  signOutOfTheApp: () => Promise<void>;
 }
 
 type AuthContextProviderProps = {
@@ -62,8 +63,18 @@ export function AuthContextProvider(props: AuthContextProviderProps){
     }
   }
 
+  async function signOutOfTheApp(){
+    const auth = getAuth()
+    signOut(auth).then(() =>{
+      setUser(undefined)
+      console.log('sucesso')
+    }).catch((error) =>{
+      console.log(error)
+    })
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOutOfTheApp }}>
       {props.children}
     </AuthContext.Provider>
   )

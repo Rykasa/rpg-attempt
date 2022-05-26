@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Mountains, FinnTheHuman, GoogleLogo} from 'phosphor-react'
 import * as C from './styles'
 import { useAuth } from '../../hooks/useAuth'
+import { database } from '../../services/firebase'
 
 export function Home() {
   const {user, signInWithGoogle} = useAuth()
